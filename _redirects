@@ -1,0 +1,15 @@
+# Netlify / Cloudflare Pages: legacy URLs -> clean URLs (301)
+/index.html / 301
+/terminbuchung.html /terminbuchung 301
+/ueber-uns.html /ueber-uns 301
+/kundenbetreuung.html /kundenbetreuung 301
+/impressum.html /impressum 301
+/datenschutz.html /datenschutz 301
+/cookies.html /cookies 301
+/mysite / 301
+/mysite/terminbuchung /terminbuchung 301
+/mysite/ueber-uns /ueber-uns 301
+/mysite/kundenbetreuung /kundenbetreuung 301
+/mysite/impressum /impressum 301
+/mysite/datenschutz /datenschutz 301
+/mysite/cookies /cookies 301

@@ -1,0 +1,17 @@
+{
+  "name": "sen-nails-pankow",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static clone of the Sen Nails Pankow website",
+  "scripts": {
+    "images": "node tools/optimize-images.mjs",
+    "build": "node build.mjs",
+    "serve": "node serve.mjs",
+    "audit": "node tools/audit.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.16.0",
+    "sharp": "^0.33.5"
+  }
+}

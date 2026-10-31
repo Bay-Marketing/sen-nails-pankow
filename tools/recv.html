@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>audit receiver</title>
+<body style="font:14px monospace;padding:20px">
+<pre id="out">waiting…</pre>
+<script>
+// Receives a gzip+base64url snapshot in the URL hash ("<name>~<data>") and stores it via POST /__save.
+(async () => {
+  const out = document.getElementById('out');
+  try {
+    const raw = decodeURIComponent(location.hash.slice(1));
+    const i = raw.indexOf('~');
+    const name = raw.slice(0, i);
+    const b64 = raw.slice(i + 1).replace(/-/g, '+').replace(/_/g, '/');
+    const bin = atob(b64 + '='.repeat((4 - (b64.length % 4)) % 4));
+    const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+    const ds = new DecompressionStream('gzip');
+    const w = ds.writable.getWriter();
+    w.write(bytes);
+    w.close();
+    const text = await new Response(ds.readable).text();
+    const res = await fetch('/__save?name=' + encodeURIComponent(name), { method: 'POST', body: text });
+    if (!res.ok && res.status !== 204) throw new Error('save HTTP ' + res.status);
+    document.title = 'saved:' + name + ' ' + text.length;
+    out.textContent = 'saved ' + name + ' (' + text.length + ' chars)';
+  } catch (e) {
+    document.title = 'FAILED:' + e;
+    out.textContent = 'FAILED ' + e;
+  }
+})();
+</script>
